@@ -1,0 +1,55 @@
+class Solution {
+public:
+int answer(string s,int index,long long num,bool check){
+    if(index>=s.size() || !isdigit(s[index])){
+        return check ? -num:num;
+    }
+    num=num*10+(s[index]-'0');
+    if(check && -num<INT_MIN){
+        return INT_MIN;
+    }
+    if(!check && num>INT_MAX){
+        return INT_MAX;
+    }
+    return answer(s,index+1,num,check);
+}
+    int myAtoi(string s) {
+        int index=0;
+        bool check=false;
+        //removing leading whitespaces
+        while(index<s.size() && s[index]==' '){
+            index++;
+        }
+        //removing leading signs
+        bool flag=false;
+        int cnt=0;
+        while(index<s.size() && (s[index]=='+' || s[index]=='-') ){
+            if(s[index]=='-'){
+                check=true;
+                cnt++;
+            }
+            if(s[index]=='+'){
+                flag=true;
+                cnt++;
+            }
+            index++;
+        }
+        if(cnt>1){
+            return 0;
+        }
+        //removing leading zeros
+        while(index<s.size() && s[index]=='0'){
+            index++;
+        }
+        long long result=answer(s,index,0,check);
+        
+        if(result>INT_MAX){
+            return INT_MAX;
+        }
+        if(result<INT_MIN){
+            return INT_MIN;
+        }
+        
+        return result;
+    }
+};
