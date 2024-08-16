@@ -1,0 +1,23 @@
+bool solve(int n,int k,vector<int>& a,int index,int sum){
+
+    if(index==n || sum>k){
+        if(sum==k){
+            return true;
+        }
+        return false;
+    }
+    //Exclude the current element
+    if(solve(n,k,a,index+1,sum+a[index])){
+        return true;
+    }
+    if(solve(n,k,a,index+1,sum)){
+        return true;
+    }
+    return false;
+}
+bool isSubsetPresent(int n, int k, vector<int> &a)
+{
+    int sum=0;
+    int index=0;
+    return solve(n,k,a,index,sum);
+}
