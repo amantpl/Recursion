@@ -1,0 +1,24 @@
+class Solution {
+public:
+void solve(vector<int>& nums,set<vector<int>>& ans,vector<int>& res,int index){
+    if(index==nums.size()){
+        ans.insert(res);
+        return ;
+    }
+    //Exclude the current element
+    solve(nums,ans,res,index+1);
+
+    //include the current element
+    res.push_back(nums[index]);
+    solve(nums,ans,res,index+1);
+    res.pop_back();
+}
+    vector<vector<int>> subsetsWithDup(vector<int>& nums) {
+        sort(nums.begin(),nums.end());
+        int index=0;
+        set<vector<int>> ans;
+        vector<int> res;
+        solve(nums,ans,res,index);
+        return vector<vector<int>>(ans.begin(),ans.end());
+    }
+};
