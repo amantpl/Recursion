@@ -1,0 +1,29 @@
+class Solution
+{
+    public:
+        void solve(vector<int> &candidates, int target, vector<vector< int >> &ans, vector< int > &res, int index)
+        {
+            
+                if (target == 0)
+                {
+                    ans.push_back(res);
+                    return;
+                }
+            if (index == candidates.size() || target < 0) return;
+           	//not taking the element
+            solve(candidates, target, ans, res, index + 1);
+
+           	//include the current element
+            res.push_back(candidates[index]);
+            solve(candidates,target - candidates[index],ans, res, index);
+            res.pop_back();
+        }
+    vector<vector < int>> combinationSum(vector<int> &candidates, int target)
+    {
+        int index = 0;
+        vector<vector < int>> ans;
+        vector<int> res;
+        solve(candidates, target, ans, res, index);
+        return ans;
+    }
+};
